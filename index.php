@@ -1,4 +1,11 @@
 <?php
+	$beginning=file_get_contents('template1.html');
+	$title='php1_ДЗ2_Тийс_Е';
+	$beginning=str_replace('{title}', $title, $beginning);
+	$footer=file_get_contents('template2.html');
+	$year=date('Y');
+	$footer=str_replace('{year}', $year, $footer);
+	echo $beginning;
 	echo "<h1>ДЗ2</h1>\n";
 	echo "<h2>Пункт 1</h2>\n";
 	$a = -2;
@@ -84,4 +91,6 @@
 		}
 	}
 	echo '10+2=', operate($a,$b,'+'),"\n";
+	
+	echo $footer;
 ?>
