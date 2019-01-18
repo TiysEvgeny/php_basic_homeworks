@@ -92,5 +92,16 @@
 	}
 	echo '10+2=', operate($a,$b,'+'),"\n";
 	
+	echo "<h2>Пункт 6</h2>\n";
+	function power($a,$p){
+		if($p>0){
+			$a*power($a,$p-1);
+		}elseif($p=0){
+			return 1;
+		}else{
+			return 'Введите целое число больше нуля';
+		}
+	}
+	
 	echo $footer;
 ?>
