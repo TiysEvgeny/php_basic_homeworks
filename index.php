@@ -129,15 +129,30 @@ echo "\n", 'Пункт 6:',"\n";
 $cathegoryList=[
 	'Tees/Tank tops',
 	'Shirts/Polos',
-	'Sweaters',
+	'Sweaters' =>[
+		'lightSweaters',
+		'Sweaters',
+		'smartSweaters'
+	],
 	'Sweatshirts/Hoodies',
 	'Blazers',
 	'Jackets/vests'
 ];
-echo '<ul class="drop-down-button__drop-list">';
-foreach($cathegoryList as $elem){
-	echo "\n\t<li>\n\t\t",'<a href="#">', $elem, '</a>',"\n\t";echo '</li>',"\n";
+var_dump($cathegoryList);
+
+function visualiseList($cathegoryList){
+	$str='';
+	$str.='<ul class="drop-down-button__drop-list">';
+	foreach($cathegoryList as $elem){
+		if (!is_array($elem)){
+			$str.= "\n\t<li>\n\t\t".'<a href="#">'. $elem. '</a>'."\n\t".'</li>'."\n";
+		}else{
+			$str.=visualiseList($elem);
+		}	
+	}
+	$str.='</ul>';
+	return $str;
 }
-echo '</ul>';
+echo visualiseList($cathegoryList);
 
 ?>
