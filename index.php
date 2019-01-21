@@ -49,7 +49,17 @@ $regions =[
 		'Карабула',
 	],
 ]; 
-var_dump($regions);
+foreach ($regions as $region => $cities){
+	echo "$region:\n";
+//	$filteredCities=[];
+//	foreach ($cities as $city){
+//		if(ord($city)>=ord('К')){
+//			echo ord($city),"**\n";
+//			$filteredCities[]=$city; 
+//		}
+//	}
+	echo implode(', ',$cities), "\n";
+}
 
 echo "\n", 'Пункт 4:',"\n";
 $letters = [
