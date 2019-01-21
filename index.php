@@ -96,4 +96,10 @@ function transliteration ($toTranslit, $transliterationRule){
 }
 
 echo transliteration('азбука', $letters);
+
+echo "\n", 'Пункт 5:',"\n";
+function spaceReplacer ($str){
+	return str_replace(' ','_', $str);
+}
+echo spaceReplacer('В этой строке нет пробелов.');
 ?>
