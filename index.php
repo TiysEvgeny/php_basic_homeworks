@@ -155,4 +155,7 @@ function visualiseList($cathegoryList){
 }
 echo visualiseList($cathegoryList);
 
+echo "\n", 'Пункт 7:',"\n";
+for($i=0;$i<=9; print $i++."\t"){};
+
 ?>
