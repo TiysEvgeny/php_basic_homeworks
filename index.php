@@ -102,4 +102,42 @@ function spaceReplacer ($str){
 	return str_replace(' ','_', $str);
 }
 echo spaceReplacer('В этой строке нет пробелов.');
+
+echo "\n", 'Пункт 6:',"\n";
+/* За основу взято меню
+<ul class="drop-down-button__drop-list">
+	<li>
+		<a href="#">Tees/Tank tops</a>
+	</li>
+	<li>
+		<a href="#">Shirts/Polos</a>
+	</li>
+	<li>
+		<a href="#">Sweaters</a>
+	</li>
+	<li>
+		<a href="#">Sweatshirts/Hoodies</a>
+	</li>
+	<li>
+		<a href="#">Blazers</a>
+	</li>
+	<li>
+		<a href="#">Jackets/vests</a>
+	</li>
+</ul>*/
+
+$cathegoryList=[
+	'Tees/Tank tops',
+	'Shirts/Polos',
+	'Sweaters',
+	'Sweatshirts/Hoodies',
+	'Blazers',
+	'Jackets/vests'
+];
+echo '<ul class="drop-down-button__drop-list">';
+foreach($cathegoryList as $elem){
+	echo "\n\t<li>\n\t\t",'<a href="#">', $elem, '</a>',"\n\t";echo '</li>',"\n";
+}
+echo '</ul>';
+
 ?>
