@@ -30,27 +30,28 @@ foreach ($files as $file){
 		
 	</div>
 	<div id="shadow"></div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
-		$(document).ready(function() {
-			$('a').click( function(event){
-				id=$('a').attr('id')
+		$(document).ready(function(){
+			$("a").click(function(event){
+				id=$("a").attr("id")
 				event.preventDefault();
-				$('#shadow').fadeIn(400,
+				$("#shadow").fadeIn(400,
 					function(){
-						$('#modalWindow') 
-							.css('display', 'block')
-							.animate({opacity: 1, top: '50%'}, 200);
+						$("#modalWindow") 
+							.css("display", "block")
+							.animate({opacity: 1, top: "50%"}, 200);
 							$img=$("img"); // Создаём элемент img
 							$img.attr("src","images/"+id); // Указываем адрес картинки
-							$(#modalWindow).append($img); // Прикрепляем img к DOM
+							$("#modalWindow").append($img); // Прикрепляем img к DOM
 					});
 			});
 			//Закрываем модальное окно
-			$('#exitModal, #shadow').click( function(){
-				$('#modalWindow').animate({opacity: 0, top: '45%'}, 200,
+			$("#exitModal, #shadow").click( function(){
+				$("#modalWindow").animate({opacity: 0, top: "45%"}, 200,
 					function(){
-						$(this).css('display', 'none');
-						$('#shadow').fadeOut(400);
+						$(this).css("display", "none");
+						$("#shadow").fadeOut(400);
 					}
 				);
 			});

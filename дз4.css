@@ -8,16 +8,16 @@ a{
 	width: 200px;
 }
 #modalWindow{
-	width: 400px; 
-	height: 400px; 
+	width: 600px; 
+	height: 600px; 
 	border-radius: 2px;
 	border: 3px #000 solid;
 	background: #fff;
-	position: fixed; 
-	top: 45%; 
-	left: 50%; 
-	margin-top: -200px;
-	margin-left: -200px;
+	position: absolute; 
+	top: 45%;
+	left: 50%;
+	margin-top: -300px;
+	margin-left: -300px;
 	display: none;
 	opacity: 0;
 	z-index: 3;
@@ -25,13 +25,17 @@ a{
 }
 
 #modalWindow #exitModal{
-	font-size: 30px;
+	font-size: 40px;
 	width: 30px;
 	height: 30px;
 	position: absolute;
 	top: 20px;
 	right: 20px;
 	cursor: pointer;
+}
+
+#modalWindow img{
+	background-repeat: no-repeat;
 }
 
 #shadow{
