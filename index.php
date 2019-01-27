@@ -15,8 +15,12 @@ foreach ($files as $file){
 	if($file != '..' && $file != '.' && !preg_match('/^mini/', $file)){
 		$miniFile=preg_replace('/^(\w)(.+).svg/','mini$1$2.png', ucfirst($file));
 		$alt=preg_replace('/.svg/','',$file);
-		echo		'<a id="',$file,'" href="images/',$file,'" target="_blank"><img src="images/',$miniFile,'" alt="',$alt,'"></a>';
-	}
+		echo <<<php
+		<a id="$file" href="images/$file" target="_blank">
+			<img src="images/$miniFile" alt="$alt">
+		</a>
+php;
+		}
 }
 ?>
 	</div>
