@@ -10,28 +10,37 @@
 <body>
 	<div class="gallery">
 <?php
-$link=mysqli_connect('localhost', 'root', 'root', 'gbphp');
+$link=mysqli_connect('localhost', 'root', '', 'gbphp');
 $sql='SELECT * FROM gallery;';
-$res=mysql_query($link,$sql);
+$res=mysqli_query($link,$sql);
 $i=0; //число строк в таблице
 define(PAGE_SIZE, 2); //Число картинок на странице
-while($row=mysql_fetch_assoc($res)){
-	$i++;
+while($row=mysqli_fetch_assoc($res)){
+	$address[]=$row['address'];
 }
-$pageCount=(int)($i/PAGE_SIZE); 
-
-$files=scandir("images");
-foreach ($files as $file){
-	if($file != '..' && $file != '.' && !preg_match('/^mini/', $file)){
-		$miniFile=preg_replace('/^(\w)(.+).svg/','mini$1$2.png', ucfirst($file));
-		$alt=preg_replace('/.svg/','',$file);
+if($_GET['page']!=0){
+	for($i=PAGE_SIZE*($_GET['page']-1);$i<PAGE_SIZE*($_GET['page']);$i++){
+		$miniFile=preg_replace('/^(\w)(.+).svg/','mini$1$2.png', ucfirst($address[$i]));
+		$alt=preg_replace('/.svg/','',$address[$i]);
 		echo <<<php
-		<a id="$file" href="images/$file" target="_blank">
+		<a id="$address[$i]" href="images/$address[$i]" target="_blank">
+			<img src="images/$miniFile" alt="$alt">
+		</a>
+php;
+	}
+}else{
+	for($i=0;$i<PAGE_SIZE;$i++){
+		$miniFile=preg_replace('/^(\w)(.+).svg/','mini$1$2.png', ucfirst($address[$i]));
+		$alt=preg_replace('/.svg/','',$address[$i]);
+		echo <<<php
+		<a id="$address[$i]" class="imgLink" href="images/$address[$i]" target="_blank">
 			<img src="images/$miniFile" alt="$alt">
 		</a>
 php;
 	}
 }
+$pageCount=(int)(sizeof($address)/PAGE_SIZE); 
+
 ?>
 	</div>
 <?php
@@ -42,7 +51,7 @@ for ($i=1; $i<=$pageCount;$i++){
 	<a href="index.php?page=$i">$i</a>
 php;
 }
-echo '<\div>';
+echo '</div>';
 ?>
 	<!--
 	<form action="">
@@ -57,8 +66,8 @@ echo '<\div>';
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
 		$(document).ready(function(){
-			$("a").click(function(event){
-				id=$("a").attr("id")
+			$(".imgLink").click(function(event){
+				id=this.attr("id")
 				event.preventDefault();
 				$("#shadow").fadeIn(400,
 					function(){
