@@ -18,8 +18,8 @@ define(PAGE_SIZE, 2); //Число картинок на странице
 while($row=mysql_fetch_assoc($res)){
 	$i++;
 }
-$pageCount=(int)($i/PAGE_SIZE);
-if($pageCount<1){$pageCount==0;}
+$pageCount=(int)($i/PAGE_SIZE); 
+
 $files=scandir("images");
 foreach ($files as $file){
 	if($file != '..' && $file != '.' && !preg_match('/^mini/', $file)){
@@ -30,10 +30,20 @@ foreach ($files as $file){
 			<img src="images/$miniFile" alt="$alt">
 		</a>
 php;
-		}
+	}
 }
 ?>
 	</div>
+<?php
+//пагинация
+echo '<div class=pagination>', 'page number: ';
+for ($i=1; $i<=$pageCount;$i++){
+	echo <<<php
+	<a href="index.php?page=$i">$i</a>
+php;
+}
+echo '<\div>';
+?>
 	<!--
 	<form action="">
 		Добавление изображения в галерею: 
