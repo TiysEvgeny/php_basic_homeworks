@@ -34,7 +34,7 @@ switch ($page){
 <body>
     <ul>
         <li><a href="?page=1">Главная</a></li>
-        <li><a href="?page=3">Пользователи</a></li>
+        <li><a href="?page=3">Каталог</a></li>
         <li><a href="?page=5">Файлы</a></li>
     </ul>
     <h1><?= $title?></h1>

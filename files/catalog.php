@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+<?php
+$content='<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="дз4.css">
+    <link rel="stylesheet" type="text/css" href="files/дз4.css">
 </head>
 
 <body>
-	<div class="gallery">
-<?php
+<div class="gallery">';
 $del = (int)$_GET['del'];
 if (! empty($del)) {
     $sql = "DELETE FROM gallery WHERE id = $del";
@@ -18,40 +18,31 @@ if (! empty($del)) {
 }
 
 $title = 'Добавление товара';
-$sql = "SELECT id, address, size, name, price) 
-        FROM gallery
-        ORDER BY id DESC";
-$res = mysqli_query(connect(), $sql);
-$content = '<a href="?page=2">Добавить</a>';
 
-while($row = mysqli_fetch_assoc($res)){
-    $content .= <<<php
-    <p>
-    Название: {$row['name']} Цена: {$row['price']} руб. 
-    | <a href="?page=3&del={$row['id']}">del</a>
-    | <a href="?page=4&edit={$row['id']}">edit</a>
-    <br>
-    </p>
+$content .= '<a href="?page=2">Добавить</a>';
 
-php;
-}
-
-$link=mysqli_connect('localhost', 'root', '', 'gbphp');
 $sql='SELECT * FROM gallery;';
-$res=mysqli_query($link,$sql);
+$res = mysqli_query(connect(), $sql);
 $i=0; //число строк в таблице
 define(PAGE_SIZE, 2); //Число картинок на странице
 while($row=mysqli_fetch_assoc($res)){
 	$address[]=$row['address'];
+	
 }
-if($_GET['page']!=0){
-	for($i=PAGE_SIZE*($_GET['page']-1);$i<PAGE_SIZE*($_GET['page']);$i++){
+if($_GET['p']!=0){
+	for($i=PAGE_SIZE*($_GET['p']-1);$i<PAGE_SIZE*($_GET['p']);$i++){
 		$miniFile=preg_replace('/^(\w)(.+).svg/','mini$1$2.png', ucfirst($address[$i]));
 		$alt=preg_replace('/.svg/','',$address[$i]);
-		echo <<<php
+		$content .= <<<php
 		<a id="$address[$i]" href="images/$address[$i]" target="_blank">
 			<img src="images/$miniFile" alt="$alt">
 		</a>
+		<p>
+			Название: {$row['name']} Цена: {$row['price']} руб. 
+			| <a href="?page=3&del={$row['id']}">del</a>
+			| <a href="?page=4&edit={$row['id']}">edit</a>
+			<br>
+		</p>
 php;
 	}
 }else{
@@ -61,24 +52,29 @@ php;
 		echo <<<php
 		<a id="$address[$i]" class="imgLink" href="images/$address[$i]" target="_blank">
 			<img src="images/$miniFile" alt="$alt">
-		</a>
+		</a>	
+		<p>
+			Название: {$row['name']} Цена: {$row['price']} руб. 
+			| <a href="?page=3&del={$row['id']}">del</a>
+			| <a href="?page=4&edit={$row['id']}">edit</a>
+			<br>
+		</p>
 php;
 	}
 }
 $pageCount=(int)(sizeof($address)/PAGE_SIZE); 
+$content .='</div>';
 
-?>
-	</div>
-<?php
 //пагинация
-echo '<div class=pagination>', 'page number: ';
+$content .= '<div class=pagination> page number: ';
 for ($i=1; $i<=$pageCount;$i++){
-	echo <<<php
-	<a href="index.php?page=$i">$i</a>
+	$content .= <<<php
+	<a href="index.php?p=$i&page=3">$i</a>
 php;
 }
-echo '</div>';
-?>
+$content .= <<<php
+	'</div>';
+
 	<!--
 	<form action="">
 		Добавление изображения в галерею: 
@@ -119,3 +115,5 @@ echo '</div>';
 </body>
 
 </html>
+php;
+?>
