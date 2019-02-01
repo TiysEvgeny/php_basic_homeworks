@@ -1,95 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+const ROOT_DIR = __DIR__;
+include('config.php');
 
+$page = (int)$_GET['page'];
+switch ($page){
+    case 1:
+        include('files/home.php');
+        break;
+    case 2:
+        include('files/addUser.php');
+        break;
+    case 3:
+        include('files/catalog.php');
+        break;
+    case 4:
+        include('files/editUser.php');
+        break;
+    case 5:
+        include('files/addFile.php');
+        break;
+    default: include('files/home.php');
+}
+?>
+<!doctype html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Галерея</title>
-    <link rel="stylesheet" type="text/css" href="дз4.css">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ДЗ6_Тийс</title>
 </head>
-
 <body>
-	<div class="gallery">
-<?php
-$link=mysqli_connect('localhost', 'root', '', 'gbphp');
-$sql='SELECT * FROM gallery;';
-$res=mysqli_query($link,$sql);
-$i=0; //число строк в таблице
-define(PAGE_SIZE, 2); //Число картинок на странице
-while($row=mysqli_fetch_assoc($res)){
-	$address[]=$row['address'];
-}
-if($_GET['page']!=0){
-	for($i=PAGE_SIZE*($_GET['page']-1);$i<PAGE_SIZE*($_GET['page']);$i++){
-		$miniFile=preg_replace('/^(\w)(.+).svg/','mini$1$2.png', ucfirst($address[$i]));
-		$alt=preg_replace('/.svg/','',$address[$i]);
-		echo <<<php
-		<a id="$address[$i]" href="images/$address[$i]" target="_blank">
-			<img src="images/$miniFile" alt="$alt">
-		</a>
-php;
-	}
-}else{
-	for($i=0;$i<PAGE_SIZE;$i++){
-		$miniFile=preg_replace('/^(\w)(.+).svg/','mini$1$2.png', ucfirst($address[$i]));
-		$alt=preg_replace('/.svg/','',$address[$i]);
-		echo <<<php
-		<a id="$address[$i]" class="imgLink" href="images/$address[$i]" target="_blank">
-			<img src="images/$miniFile" alt="$alt">
-		</a>
-php;
-	}
-}
-$pageCount=(int)(sizeof($address)/PAGE_SIZE); 
+    <ul>
+        <li><a href="?page=1">Главная</a></li>
+        <li><a href="?page=3">Пользователи</a></li>
+        <li><a href="?page=5">Файлы</a></li>
+    </ul>
+    <h1><?= $title?></h1>
+    <div><?= $content?></div>
 
-?>
-	</div>
-<?php
-//пагинация
-echo '<div class=pagination>', 'page number: ';
-for ($i=1; $i<=$pageCount;$i++){
-	echo <<<php
-	<a href="index.php?page=$i">$i</a>
-php;
-}
-echo '</div>';
-?>
-	<!--
-	<form action="">
-		Добавление изображения в галерею: 
-		<input type="file" name="imgFile" value="">
-	</form>-->
-	<div id="modalWindow">
-	<div id="exitModal">x</div>
-		
-	</div>
-	<div id="shadow"></div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script>
-		$(document).ready(function(){
-			$(".imgLink").click(function(event){
-				id=this.attr("id")
-				event.preventDefault();
-				$("#shadow").fadeIn(400,
-					function(){
-						$("#modalWindow") 
-							.css("display", "block")
-							.animate({opacity: 1, top: "50%"}, 200);
-							$img=$("img"); // Создаём элемент img
-							$img.attr("src","images/"+id); // Указываем адрес картинки
-							$("#modalWindow").append($img); // Прикрепляем img к DOM
-					});
-			});
-			//Закрываем модальное окно
-			$("#exitModal, #shadow").click( function(){
-				$("#modalWindow").animate({opacity: 0, top: "45%"}, 200,
-					function(){
-						$(this).css("display", "none");
-						$("#shadow").fadeOut(400);
-					}
-				);
-			});
-		});
-	</script>
 </body>
-
 </html>
